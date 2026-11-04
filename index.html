@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nectar 🐝 Monitoramento de Estudantes</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <div class="logo">🐝 NEC<span>TAR</span></div>
+  <nav>
+    <button data-v="pais" class="on">Acesso dos pais</button>
+    <button data-v="cad">Cadastro de tags</button>
+    <button data-v="ant">Antena (protótipo)</button>
+    <button id="btnAuth">Entrar (equipe)</button>
+  </nav>
+</header>
+<div id="toasts"></div>
+<main>
+
+<div class="card" id="cfgWarn" hidden>
+  <h2>⚙️ Falta configurar o Supabase</h2>
+  <p class="s" style="margin:0">Abra este arquivo e preencha <span class="tag">SUPABASE_URL</span> e <span class="tag">SUPABASE_ANON_KEY</span> no início do script.</p>
+</div>
+
+<section id="v-pais">
+  <div class="card" id="loginBox">
+    <div class="hero"><span class="bee">🐝</span><div><h2>Acompanhe seu filho(a)</h2><p class="s" style="margin:0">Digite o CPF do estudante para localizar o cadastro da colmeia.</p></div></div>
+    <label for="cpfLogin">CPF do estudante</label>
+    <input id="cpfLogin" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" autocomplete="off">
+    <button class="btn" id="btnLogin">Buscar</button>
+    <div class="msg" id="loginMsg"></div>
+  </div>
+  <div id="painel" hidden>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+        <div><h2 id="pNome"></h2><p class="s" style="margin:0">CPF <span id="pCpf"></span> · Tag <span class="tag" id="pTag"></span></p></div>
+        <button class="btn g" id="btnSair" style="margin:0">Trocar CPF</button>
+      </div>
+      <div class="st"><span class="dot" id="pDot"></span><div><b id="pStatus"></b><div id="pSub" class="s" style="margin:0"></div></div></div>
+      <button class="btn g" id="btnNotif" style="margin-top:0">Ativar avisos no navegador</button>
+    </div>
+    <div class="card"><h3>Histórico de passagens</h3><div id="pHist"></div></div>
+  </div>
+</section>
+
+<section id="v-login" hidden>
+  <div class="card">
+    <h2>🔐 Acesso da equipe</h2>
+    <p class="s">Cadastro de tags e simulador de antena são restritos à equipe da escola.</p>
+    <div class="row">
+      <div><label for="sEmail">E-mail</label><input id="sEmail" type="email" autocomplete="username"></div>
+      <div><label for="sPass">Senha</label><input id="sPass" type="password" autocomplete="current-password"></div>
+    </div>
+    <button class="btn" id="btnStaff">Entrar</button>
+    <div class="msg" id="staffMsg"></div>
+  </div>
+</section>
+
+<section id="v-cad" hidden>
+  <div class="card">
+    <h2>🍯 Cadastrar tag</h2>
+    <p class="s">Associe a tag RFID ao nome e CPF do estudante. Esses dados aparecem em toda notificação.</p>
+    <div class="row">
+      <div><label for="cNome">Nome do estudante</label><input id="cNome" placeholder="Ex.: Ana Souza"></div>
+      <div><label for="cCpf">CPF do estudante</label><input id="cCpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14"></div>
+      <div><label for="cResp">Responsável (opcional)</label><input id="cResp" placeholder="Nome do pai/mãe"></div>
+      <div><label for="cTag">ID da tag RFID</label><input id="cTag" placeholder="Ex.: E200-3412-0001" style="text-transform:uppercase"></div>
+    </div>
+    <button class="btn" id="btnCad">Cadastrar</button>
+    <button class="btn g" id="btnDemo">Carregar exemplo</button>
+    <div class="msg" id="cadMsg"></div>
+  </div>
+  <div class="card"><h3>Estudantes cadastrados</h3><div class="tw" id="lista"></div></div>
+</section>
+
+<section id="v-ant" hidden>
+  <div class="card">
+    <h2>📡 Simulador de antena</h2>
+    <p class="s">Simula a leitura que o protótipo da antena enviaria ao Nectar quando uma tag passa pelo portal.</p>
+    <div class="row">
+      <div><label for="aTag">Tag lida</label><select id="aTag"></select></div>
+      <div><label for="aAnt">Antena</label>
+        <select id="aAnt"><option>Portão principal</option><option>Portão lateral</option><option>Entrada do pátio</option></select></div>
+    </div>
+    <label for="aTagManual">Ou digite um ID de tag (testa tag não cadastrada)</label>
+    <input id="aTagManual" placeholder="ID da tag" style="text-transform:uppercase">
+    <button class="btn" id="btnLer">Simular leitura</button>
+    <div class="msg" id="antMsg"></div>
+  </div>
+  <div class="card"><h3>Leituras recentes (todas as antenas)</h3><div id="log"></div></div>
+</section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/script.js"></script>
+<footer>
+  <img src="logo-ecit.png" alt="Logo da escola ECIT.MME" onerror="this.style.display='none'">
+  <div class="ft"><b>ECIT.MME</b><span>Nectar · protótipo de monitoramento de estudantes</span></div>
+</footer>
+</body>
+</html>
